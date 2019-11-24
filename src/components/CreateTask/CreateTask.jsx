@@ -3,44 +3,48 @@ import styles from "./CreateTask.module.scss";
 import { firestore } from "../../firebase";
 
 class CreateTask extends Component {
-  state = { inputText: "", title: "", description: "" };
+  state = { title: "", description: "" };
 
-  setTitleInput = event => {
+  setTitle = event => {
     this.setState({ title: event.target.value });
   };
 
-  setDescInput = event => {
+  setDescription = event => {
     this.setState({ description: event.target.value });
   };
+  rerender = () => {
+    this.props.getTasks();
+    this.setState({ title: "", description: "" });
+  };
   handleSubmit = () => {
-    firestore
-      .collection("Tasks")
-      .doc()
-      .set({
-        title: this.state.title,
-        description: this.state.description,
-        status: "incomplete"
-      })
-      .then(console.log("sent"))
-      .catch(console.log("not sent"));
+    this.state.title !== "" && this.state.description !== ""
+      ? firestore
+          .collection("Tasks")
+          .doc()
+          .set({
+            title: this.state.title,
+            description: this.state.description,
+            status: 0,
+            datePosted: new Date()
+          })
+          .then(() => {
+            this.rerender();
+          })
+          .catch(err => console.log(err))
+      : console.log("insufficient data entered");
   };
 
   render() {
-    console.log(this.state.title, this.state.description);
     return (
       <section className={styles.createTask}>
         <p>
           <strong>Title</strong>
         </p>
-        <input
-          onChange={this.setTitleInput}
-          value={this.titleInput}
-          type="text"
-        />
+        <input onChange={this.setTitle} value={this.state.title} type="text" />
         <p>Description</p>
         <input
-          onChange={this.setDescInput}
-          value={this.descInput}
+          onChange={this.setDescription}
+          value={this.state.description}
           type="text"
         />
         <button onClick={this.handleSubmit}>submit</button>
