@@ -20,8 +20,7 @@ class App extends React.Component {
   getTasks = () => {
     firestore
       .collection("Tasks")
-      .orderBy("status", "desc")
-      // .orderBy("datePosted", "desc")
+      .orderBy("status", "asc")
       .get()
       .then(querySnapshot => {
         const tasks = querySnapshot.docs.map(doc => {
@@ -81,6 +80,12 @@ class App extends React.Component {
   };
 
   render() {
+    let completeStyle =
+      this.state.filter === "Complete" ? { backgroundColor: "#56bc8a" } : null;
+    let incompleteStyle =
+      this.state.filter === "Incomplete"
+        ? { backgroundColor: "#56bc8a" }
+        : null;
     let html =
       this.state.user != null ? (
         <>
@@ -88,10 +93,12 @@ class App extends React.Component {
             <Button
               onClick={() => this.alterFilters("Complete")}
               text="Complete"
+              styling={completeStyle}
             />
             <Button
               onClick={() => this.alterFilters("Incomplete")}
               text="Incomplete"
+              styling={incompleteStyle}
             />
             <input
               value={this.state.searchText}

@@ -91,9 +91,17 @@ class Task extends Component {
 
   render() {
     const renderCheckbox = this.props.taskData.status ? (
-      <FontAwesomeIcon icon={faCheckCircle} onClick={this.changeStatus} />
+      <FontAwesomeIcon
+        id="checkCircle"
+        icon={faCheckCircle}
+        onClick={this.changeStatus}
+      />
     ) : (
-      <FontAwesomeIcon icon={faCircle} onClick={this.changeStatus} />
+      <FontAwesomeIcon
+        id="circle"
+        icon={faCircle}
+        onClick={this.changeStatus}
+      />
     );
 
     const conditionalStyling = this.props.taskData.status
@@ -126,9 +134,6 @@ class Task extends Component {
           </p>
 
           <div>
-            <i>
-              <FontAwesomeIcon icon={faPen} onClick={this.updateTask} />
-            </i>
             <i>
               <FontAwesomeIcon icon={faTimes} onClick={this.deleteTask} />
             </i>

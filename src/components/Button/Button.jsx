@@ -1,14 +1,18 @@
 import React from "react";
 import styles from "./Button.module.scss";
 
-class Login extends React.Component {
+class Button extends React.Component {
   render() {
     return (
-      <button className={styles.button} onClick={this.props.onClick}>
+      <button
+        className={styles.button}
+        onClick={this.props.onClick}
+        style={this.props.styling}
+      >
         {this.props.text}
       </button>
     );
   }
 }
 
-export default Login;
+export default Button;
