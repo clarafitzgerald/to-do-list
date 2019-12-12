@@ -5,14 +5,9 @@ import firebase, { provider } from "../../firebase";
 import Button from "../../components/Button";
 import { firestore } from "../../firebase";
 
-/*{ Users can
-  90%+ test code coverage}*/
-
 class App extends React.Component {
   state = {
     user: null,
-    numImages: 0,
-    rotation: 0,
     filter: [],
     tasks: [],
     searchText: ""
@@ -40,7 +35,7 @@ class App extends React.Component {
               .includes(this.state.searchText.toLowerCase()) ||
             task.description
               .toLowerCase()
-              .includes(this.state.searchText.toLowerCase)
+              .includes(this.state.searchText.toLowerCase())
         );
         this.setState({
           tasks: searchFilteredTasks
